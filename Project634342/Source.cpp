@@ -1,7 +1,7 @@
-#include<iostream>
-#include<Windows.h>
-#include<string>
-#include<limits>
+#include <iostream>
+#include <Windows.h>
+#include <string>
+#include <limits>
 #include <iomanip>
 
 #if defined(max)
@@ -40,14 +40,14 @@ void CreateStaticStorage();
 void RefillStorage();
 bool isStringDigit(std::string string);
 void RemoveFromStorage();
-void CheakPrice();
+void ChangePrice();
 
 void ChangeStaff();
-void AddEmloyer();
+void AddEmloyee();
 void StaffRedact();
 void RemoveEmployee();
 
-void StorageRedacters();
+void StorageRedact();
 void StorageReduct();
 
 void AddProduct();
@@ -291,7 +291,7 @@ void ShopAdminMenu()
 		}
 		else if (choose == "5")
 		{
-			CheakPrice();
+			ChangePrice();
 		}
 		else if (choose == "6")
 		{
@@ -592,99 +592,93 @@ void RemoveFromStorage()
 
 
 
-void CheakPrice()
-{
-	std::string idStr, newPriceStr, choose;
-	int id{}, price{};
-	double newPrice{};
+void ChangePrice(){
+	system("cls");
+	ShowStorage();
+	std::cout << "\n\n\n";
+	std::string idStr, changeStr, choose;
+	int id{};
+	double change{};
 	bool exit = false;
 
 	while (!exit)
 	{
+
 		while (true)
 		{
-			std::cout << "Изменить цену\nВведите id товара : ";
+			std::cout << "Изменение цены товара\nВведите id товара: ";
 			std::getline(std::cin, idStr, '\n');
 
 			if (std::isdigit(idStr[0]) && idStr.size() == 1)
 			{
 				id = std::stoi(idStr);
+
 			}
-			else if (std::isdigit(idStr[0]) &&
-				std::isdigit(idStr[1]) && idStr.size() == 2)
+			else if (std::isdigit(idStr[0]) && std::isdigit(idStr[1]) && idStr.size() == 2)
 			{
 				id = std::stoi(idStr);
+
 			}
 			else
 			{
-				std::cout << "Ошибка ввода\n";
-			}
+				std::cout << "Ошибка ввода";
 
+			}
 			if (id > 0 && id <= size)
 			{
-
 				system("cls");
 				break;
 			}
 			else
 			{
-				std::cout << "Неверный ID\n";
+				std::cout << "Ошибка ввода";
 			}
 		}
-
-
-		std::cout << "\n\n" << idArr[id - 1] << " " << nameArr[id - 1] << "\t Текущая цена" << priceArr[id - 1] << "\n\n";
+		std::cout << "\n\n" << idArr[id - 1] << " " << nameArr[id - 1] << "\n Цена товара: " << priceArr[id - 1] << "\n\n";
 
 		while (true)
 		{
-			std::cout << "Введите новую цену: ";
-			std::getline(std::cin, newPriceStr, '\n');
-
-			if (isStringDigit(newPriceStr))
+			std::cout << "Введите новую товара: ";
+			std::getline(std::cin, changeStr, '\n');
+			if (isStringDigit(changeStr))
 			{
-				price = std::stod(newPriceStr);
-
-				if (newPrice >= 0 && price <= 10000)
-				{
-					break;
-				}
-
-				else
-				{
-					std::cout << "Некорекктное кол-во\n\n";
-				}
-
+				change = std::stoi(changeStr);
+			}
+			if (change >= 0 && change <= 9999)
+			{
+				break;
 			}
 			else
 			{
-				std::cout << "Ошибка ввода\n\n";
+				std::cout << "Ошибка ввода";
 			}
 		}
-
 		while (true)
 		{
-			std::cout << "Назначит " << nameArr[id - 1] << " новую цену " << newPrice;
-			std::cout << "\n1 - Да\t2 - Нет\t3 - Отмена\n\n";
+
+			std::cout << "Назначить товару " << nameArr[id - 1] << " новую цену" << "?\n";
+			std::cout << "1 - Да\t\t2 - Нет\t\t3 - Отмена\n\n";
 			std::getline(std::cin, choose, '\n');
+
 			if (choose == "1")
 			{
-				countArr[id - 1] = newPrice;
-				std::cout << "\nЦена товара успешно изменена\n";
+				priceArr[id - 1] = (change + 0.99);
+				std::cout << "Цена успешно установлена\n\n";
 				exit = true;
 				break;
 			}
-			else if (choose == "2")
+			if (choose == "2")
 			{
 				break;
 			}
-			else if (choose == "3")
+			if (choose == "3")
 			{
 				exit = true;
 				break;
 			}
 			else
 			{
-				std::cout << "Ошибка ввода\n\n";
+				std::cerr << "Ошибка ввода";
 			}
 		}
 
@@ -702,7 +696,7 @@ void ChangeStaff()
 
 		if (choose == "1")
 		{
-			AddEmloyer();
+			AddEmloyee();
 		}
 		if (choose == "2")
 		{
@@ -729,7 +723,7 @@ void ChangeStaff()
 
 }
 
-void AddEmloyer()
+void AddEmloyee()
 {
 	std::string* tempLogin = new std::string[userCount];
 	std::string* tempPass = new std::string[userCount];
@@ -869,7 +863,7 @@ void RemoveEmployee()
 
 }
 
-void StorageRedacters()
+void StorageRedact()
 {
 	std::string choose;
 	std::cout << "Изменения склада магазина\n\n";
@@ -1059,9 +1053,6 @@ void StorageReduct()
 		}
 	}
 }
-
-
-
 
 void RenameProduct()
 {
